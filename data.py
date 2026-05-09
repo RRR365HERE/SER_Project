@@ -64,3 +64,38 @@ def parse_filename( filename: str) -> dict:
         "actor": actor,
         "gender": gender,
     }
+
+def build_metadata( data_root: str | Path ) -> pd.DataFrame:
+    """
+    This function is used to build a metadata DataFrame with one row per audio file.
+
+    Parameters
+    ----------
+    data_root : str or Path
+        Path to the directory containing Actor_01, Actor_02, ...
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: filename, modality, channel, emotion, emotion_code, intensity, statement,
+        repetition, actor, gender, path.
+    """
+
+    data_root = Path( data_root )
+    if not data_root.exists():
+        raise FileNotFoundError( f"Data directory not found: {data_root}" )
+    rows = []
+    skipped = []
+    for wav_path in sorted(data_root.rglob( "*.wav" )):
+        try:
+            meta = parse_filename(wav_path.name)
+        except ValueError as e:
+            skipped.append((wav_path.name, str(e)))
+            continue
+        meta["path"] = str(wav_path.resolve())
+        rows.append(meta)
+    if skipped:
+        print( f"Skipped {len(skipped)} files with malformed names. " )
+    if not rows:
+        raise RuntimeError( f"No .waf file found under {data_root}" )
+    return pd.DataFrame(rows)
