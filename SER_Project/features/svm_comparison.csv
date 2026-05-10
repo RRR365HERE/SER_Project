@@ -1,0 +1,5 @@
+model,accuracy,macro_f1
+LinearSVM (ours),0.5719,0.5146
+LinearSVC (sklearn),0.5965,0.5772
+SVC RBF (sklearn),0.6316,0.6086
+SVC Polynomial deg=3 (sklearn),0.6281,0.5833
