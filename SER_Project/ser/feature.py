@@ -15,7 +15,7 @@ from tqdm import tqdm
 SAMPLE_RATE = 22050 # while RAVDESS is 4kHZ, after searching online about similar problems, i understood that it could be haved to double the extraction speed
 N_MFCC = 13 # Got it from similar problems after searching
 N_FFT = 2048
-HOP_LENGTH = 513
+HOP_LENGTH = 512
 TRIM_TOP_DB = 30
 
 def _summarize( arr: np.ndarray ) -> np.ndarray:
@@ -34,7 +34,7 @@ def _summarize( arr: np.ndarray ) -> np.ndarray:
     """
 
     if arr.ndim == 1:
-        return np.array([arr.mean(), arr.std])
+        return np.array([arr.mean(), arr.std()])
     return np.concatenate([arr.mean(axis=1), arr.std(axis=1)])
 
 
