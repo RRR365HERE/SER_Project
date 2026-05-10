@@ -1,0 +1,4 @@
+method,ARI,NMI
+KMeans (ours),0.0693,0.1409
+KMeans (sklearn),0.0695,0.1428
+Hierarchical (ward),0.0618,0.132
